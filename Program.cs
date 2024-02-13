@@ -39,6 +39,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/User/Create");
+        return;
+    }
+
+    await next();
+});
 // Middleware to log user entry
 app.Use(async (context, next) =>
 {
